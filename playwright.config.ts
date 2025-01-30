@@ -1,4 +1,10 @@
 import { defineConfig, devices } from '@playwright/test';
+import { config as dotenvConfig } from 'dotenv';
+import { resolve } from 'path';
+
+dotenvConfig({ path: resolve(__dirname, '.env'), override: true });
+
+require('dotenv').config();
 
 export default defineConfig({
   testDir: './tests',
@@ -7,26 +13,29 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
   reporter: 'html',
-  
+
   use: {
-    baseURL: 'https://dev.to',
     trace: 'on-first-retry',
   },
 
   projects: [
+    // API Test Project
     {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      name: 'API',
+      testMatch: '**/tests/api_tests/*.spec.ts',
+      use: {
+        baseURL: process.env.DEV_API_URL || '',
+      },
     },
 
+    // E2E UI Test Project
     {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
-
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
+      name: 'UI',
+      testMatch: '**/tests/e2e_tests/*.spec.ts',
+      use: {
+        baseURL: process.env.DEV_BASE_URL || '',
+        ...devices['Desktop Chrome'],
+      },
     },
   ],
 });

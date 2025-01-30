@@ -1,0 +1,13 @@
+{
+    "article": {
+        "title": "Playwright Test Article",
+        "body_markdown": "**New** body for the article",
+        "published": true,
+        "series": "Playwright",
+        "main_image": null,
+        "canonical_url": null,
+        "description": "New Test Article for Playwright",
+        "tags": "test",
+        "organization_id": 0
+    }
+}
