@@ -68,7 +68,6 @@ test.describe('Users API', () => {
         expect(userArticlesResponseBody.error).toBe('unauthorized');
     });
 
-
     /**
      * Retrieving a list of published articles should be possible for a valid user with authorization
      */
